@@ -1,6 +1,6 @@
 class Snake {
     constructor() {
-        this.gridSize = 25;
+        this.gridSize = 20;
         this.canvas = document.getElementById('gameCanvas');
         this.ctx = this.canvas.getContext('2d');
         this.score = 0;
@@ -50,20 +50,12 @@ class Snake {
     generateFood() {
         const x = Math.floor(Math.random() * (this.canvas.width / this.gridSize));
         const y = Math.floor(Math.random() * (this.canvas.height / this.gridSize));
-        
-        const isOnSnake = this.snake.some(segment => segment.x === x && segment.y === y);
-        if (isOnSnake) {
-            return this.generateFood();
-        }
         return {x, y};
     }
 
     draw() {
         // 清空画布
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-        // 绘制网格背景（可选）
-        this.drawGrid();
 
         // 绘制蛇
         this.ctx.fillStyle = '#4CAF50';
@@ -84,25 +76,6 @@ class Snake {
             this.gridSize - 2,
             this.gridSize - 2
         );
-    }
-
-    drawGrid() {
-        this.ctx.strokeStyle = '#f0f0f0';
-        this.ctx.lineWidth = 0.5;
-
-        for (let x = 0; x < this.canvas.width; x += this.gridSize) {
-            this.ctx.beginPath();
-            this.ctx.moveTo(x, 0);
-            this.ctx.lineTo(x, this.canvas.height);
-            this.ctx.stroke();
-        }
-
-        for (let y = 0; y < this.canvas.height; y += this.gridSize) {
-            this.ctx.beginPath();
-            this.ctx.moveTo(0, y);
-            this.ctx.lineTo(this.canvas.width, y);
-            this.ctx.stroke();
-        }
     }
 
     move() {
